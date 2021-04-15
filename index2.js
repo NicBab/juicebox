@@ -1,0 +1,1 @@
+const newVar = 2
