@@ -114,8 +114,10 @@ async function createPost({
 async function updatePost(postId, fields = {}) {
   // read off the tags & remove that field 
   const { tags } = fields; // might be undefined
+  console.log(fields, "line 117")
+  console.log(tags)
   delete fields.tags;
-
+  console.log(fields, "line 118")
   // build the set string
   const setString = Object.keys(fields).map(
     (key, index) => `"${ key }"=$${ index + 1 }`
@@ -139,10 +141,11 @@ async function updatePost(postId, fields = {}) {
 
     // make any new tags that need to be made
     const tagList = await createTags(tags);
+   console.log(tagList, "tagList")
     const tagListIdString = tagList.map(
       tag => `${ tag.id }`
     ).join(', ');
-
+    console.log(tagListIdString, "string 148")
     // delete any post_tags from the database which aren't in that tagList
     await client.query(`
       DELETE FROM post_tags
@@ -150,7 +153,7 @@ async function updatePost(postId, fields = {}) {
       NOT IN (${ tagListIdString })
       AND "postId"=$1;
     `, [postId]);
-
+      console.log(postId, "line 153")
     // and create post_tags as necessary
     await addTagsToPost(postId, tagList);
 
@@ -255,8 +258,8 @@ async function createTags(tagList) {
       WHERE name
       IN (${ selectValues })
     `, tagList);
-
-    return tagList;
+  
+    return rows;
   } catch(error) {
     throw error;
   }
@@ -322,5 +325,6 @@ module.exports = {
   createTags,
   createPostTag,
   addTagsToPost,
+  getPostsByTagName
 }
 

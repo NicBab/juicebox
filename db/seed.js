@@ -10,7 +10,8 @@ const {  client,
   getPostById,
   createTags,
   createPostTag,
-  addTagsToPost } = require("./index");
+  addTagsToPost,
+  getPostsByTagName } = require("./index");
 
 async function createInitialUsers() {
   try {
@@ -123,11 +124,12 @@ async function testDB() {
       content: "Updated Content"
     });
 
-    // console.log("Calling updatePost on posts[1], only updating tags");
-    // const updatePostTagsResult = await updatePost(posts[1].id, {
-    //   tags: ["#youcandoanything", "#redfish", "#bluefish"]
-    // });
-    // console.log("Result:", updatePostTagsResult);
+    console.log("Calling updatePost on posts[1], only updating tags");
+    console.log(posts[1])
+    const updatePostTagsResult = await updatePost(posts[1].id, {
+      tags: ["#youcandoanything", "#redfish", "#bluefish"]
+    });
+    console.log("Result:", updatePostTagsResult);
 
     
     console.log("Result:", updatePostResult);
@@ -136,9 +138,9 @@ async function testDB() {
     const albert = await getUserById(1);
     console.log("Result:", albert);
 
-    // console.log("Calling getPostsByTagName with #happy");
-    // const postsWithHappy = await getPostsByTagName("#happy");
-    // console.log("Result:", postsWithHappy);
+    console.log("Calling getPostsByTagName with #happy");
+    const postsWithHappy = await getPostsByTagName("#happy");
+    console.log("Result:", postsWithHappy);
 
 
     console.log("!!Finished database tests!!");
