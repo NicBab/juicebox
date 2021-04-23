@@ -6,11 +6,6 @@ const server = express();
 const {client} = require('./db');
 client.connect();
 
-const apiRouter = require('./api');
-server.use('/api', apiRouter);
-
-
-
 const bodyParser = require('body-parser');
 server.use(bodyParser.json());
 
@@ -24,6 +19,19 @@ server.use((req, res, next) => {
   
     next();
   });
+
+//   server.use((req, res, next) => {
+//       console.log('next piece of middleware');
+
+//       next();
+//   });
+
+//   server.get("/", (req, res) => {
+//       res.send("hello world");
+//   });
+
+  const apiRouter = require('./api');
+server.use('/api', apiRouter);
 
   server.listen(PORT, () => {
     console.log('The server is up on port', PORT)

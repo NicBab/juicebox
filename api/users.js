@@ -13,9 +13,26 @@ usersRouter.get('/', async (req, res) => {
     const users = await getAllUsers();
 
     res.send({
+        users
+    });
+});
+
+usersRouter.get('/register', async (req, res) => {
+    const users = await getAllUsers();
+
+    res.send({
         users: []
     });
 });
+
+usersRouter.get('/login', async (req, res) => {
+    const users = await getAllUsers();
+
+    res.send({
+        users: []
+    });
+});
+
 
 module.exports = usersRouter;
 
