@@ -11,7 +11,8 @@ const {  client,
   createTags,
   createPostTag,
   addTagsToPost,
-  getPostsByTagName } = require("./index");
+  getPostsByTagName,
+  getUserByUsername } = require("./index");
 
 async function createInitialUsers() {
   try {
