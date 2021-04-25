@@ -4,6 +4,21 @@ const postsRouter = express.Router();
 const {getAllPosts, createPost, updatePost, getPostById} = require('../db');
 const { requireUser } = require('./utils');
 
+postsRouter.get('/', async (req, res) => {
+  try {
+    const allPosts = await getAllPosts();
+    const posts = allPosts.filter(post => {
+      return post.active || (req.user && post.author === req.user.id)
+    });
+
+    res.send({
+      posts
+    });
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 
 postsRouter.post('/', requireUser, async (req, res, next) => {
   const { title, content, tags = "" } = req.body;
